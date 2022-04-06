@@ -30,7 +30,7 @@ public class RNDrawOverlayModule extends ReactContextBaseJavaModule {
                         mPromise.resolve(true);
                     }
                     else {
-                        mPromise.reject(false);
+                        mPromise.resolve(false);
                     }
                 } else {
                     mPromise.resolve(true);
