@@ -18,7 +18,6 @@ public class RNDrawOverlayModule extends ReactContextBaseJavaModule {
     private final ReactApplicationContext reactContext;
     private final int DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE = 1222;
     private Promise mPromise;
-    private final String error  = "Permission was not granted";
 
     private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
         @Override
@@ -31,7 +30,7 @@ public class RNDrawOverlayModule extends ReactContextBaseJavaModule {
                         mPromise.resolve(true);
                     }
                     else {
-                        mPromise.reject(new Throwable(error));
+                        mPromise.reject(false);
                     }
                 } else {
                     mPromise.resolve(true);
