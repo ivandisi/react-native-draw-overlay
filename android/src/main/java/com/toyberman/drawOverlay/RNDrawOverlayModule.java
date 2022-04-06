@@ -55,6 +55,15 @@ public class RNDrawOverlayModule extends ReactContextBaseJavaModule {
         return "RNDrawOverlay";
     }
 
+    @ReactMethod
+    public void checkForDispalayOverOtherAppsPermission(Promise promise) {
+        mPromise = promise;
+        if (!Settings.canDrawOverlays(this.reactContext)) {
+            promise.resolve(false);
+        } else {
+            promise.resolve(true);
+        }
+    }
 
     @ReactMethod
     public void askForDispalayOverOtherAppsPermission(Promise promise) {
