@@ -57,9 +57,13 @@ public class RNDrawOverlayModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void checkForDispalayOverOtherAppsPermission(Promise promise) {
-        mPromise = promise;
-        if (!Settings.canDrawOverlays(this.reactContext)) {
-            promise.resolve(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mPromise = promise;
+            if (!Settings.canDrawOverlays(this.reactContext)) {
+                promise.resolve(false);
+            } else {
+                promise.resolve(true);
+            }
         } else {
             promise.resolve(true);
         }
@@ -68,9 +72,13 @@ public class RNDrawOverlayModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void askForDispalayOverOtherAppsPermission(Promise promise) {
         mPromise = promise;
-        if (!Settings.canDrawOverlays(this.reactContext)) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + this.reactContext.getPackageName()));
-            this.reactContext.startActivityForResult(intent, DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE, null);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this.reactContext)) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + this.reactContext.getPackageName()));
+                this.reactContext.startActivityForResult(intent, DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE, null);
+            } else {
+                promise.resolve(true);
+            }
         } else {
             promise.resolve(true);
         }
